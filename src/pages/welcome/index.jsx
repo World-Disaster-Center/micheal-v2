@@ -34,4 +34,16 @@ function WelcomePage() {
 
          <div className='flex gap-6 mt-5 lg:mt-8'>
           <div className='border border-michael_gray_4 h-1 p-[2px] lg:p-[3px] rounded-xl w-[100px] bg-michael_gray_4'></div>
-          <div className='border border-michael_gray_4 h-1 p-[2px] lg
+          <div className='border border-michael_gray_4 h-1 p-[2px] lg:p-[3px] rounded-xl w-[100px]'></div>
+         </div>
+       </div>
+
+      </div>
+    </div>
+    <Footer1 />
+    </section>
+    
+  )
+}
+
+export default WelcomePage;

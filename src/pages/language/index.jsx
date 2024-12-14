@@ -115,4 +115,15 @@ function Language() {
 
           <div className='flex gap-6 mt-10 lg:mt-28'>
             <div className='border border-michael_gray_4 h-1 p-[2px] lg:p-[3px] rounded-xl w-[100px]'></div>
-        
+            <div className='border border-michael_gray_4 h-1 p-[2px] lg:p-[3px] rounded-xl w-[100px]  bg-michael_gray_4'></div>
+         </div>
+        </div>
+          
+        </div>
+      </div>
+      <Footer1 />
+    </section>
+  );
+}
+
+export default Language;
