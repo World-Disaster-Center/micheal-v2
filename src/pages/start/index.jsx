@@ -23,8 +23,8 @@ const StartingPage = () => {
   return (
     <div className="bg-michael_red_100 h-[100vh] flex flex-col justify-between">
    
-    <div className="flex flex-col items-center justify-center gap-10 flex-grow">
-      <img src={logoMichael} alt="Logo Michael" className="w-[8%]" />
+    <div className="flex flex-col items-center justify-center gap-5 lg:gap-10 flex-grow">
+      <img src={logoMichael} alt="Logo Michael" className="w-[15%] lg:w-[8%]" />
       <div className="w-[20%] h-2 border border-michael_gray_2 rounded-lg">
         <div
           className="h-full rounded-lg bg-gray-300 transition-all duration-300"

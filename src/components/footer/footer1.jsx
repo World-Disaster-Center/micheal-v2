@@ -10,11 +10,4 @@ function Footer1() {
       </div>
       <hr className='border border-michael_gray_2 mt-2 w-[60%] mx-auto lg:hidden' />
       <div className='self-end pl-3 lg:pl-32 text-center lg:text-left my-4 lg:my-0'>
-        <p className='text-michael_gray_1 text-[13px] lg:text-[16px]'><span className='text-michael_gray_3 font-medium'>Email</span>:info@loremipsum.com</p>
-        <p className='text-michael_gray_1 text-[11px] lg:text-[16px] mt-2'>©World Disaster Center / Michael  2024. All Rights Reserved.</p>
-      </div>
-    </div>
-  )
-}
-
-export default Footer1
+        <p className='text-michael_gray_1 text-[13px] lg:text-[16px]'><span

@@ -15,9 +15,4 @@ function MainRoutes() {
             <Route path="/language" element={<Language />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="*" element={<NotFoundPage/>}/>
-        </Routes>
-    )
-}
-
-export default MainRoutes
+            <Route pa

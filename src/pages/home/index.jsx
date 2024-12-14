@@ -173,22 +173,4 @@ const HomePage = () => {
                   <p className='text-[13px] font-semibold text-michael_gray_3'>{title} </p>
                   <p className='text-[11px] text-michael_gray_3'>Lorem ipsum dolor sit amet </p>
                 </div>
-               <img src={icon} className='w-[50px] lg:w-[70px] h-[50px] lg:h-[70px]' alt="icon" />
-              </div>
-            </div>
-          ))}
-        </div>
-        <button
-          onClick={handleNext}
-          disabled={currentIndex + maxCardsPerPage >= filteredCards.length}
-        >
-          <FiChevronRight className='text-michael_gray_2 text-8xl hidden lg:flex' />
-        </button>
-      </div>
-
-      <News />
-    </section>
-  );
-};
-
-export default HomePage;
+           
