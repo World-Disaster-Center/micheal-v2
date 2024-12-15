@@ -1,16 +1,18 @@
 import React from "react";
-import FilterButton from "./FilterButton";
+import { FaGlobe, FaHandPeace, FaSun, FaMountain, FaWater, FaBolt, FaSatelliteDish, FaRobot, FaWind } from "react-icons/fa";
 
-// Import filter icons
-import NaturalIcon from "../../assets/filters/natural.png";
-import DemonstrationIcon from "../../assets/filters/demonstrations.png";
-import DroughtIcon from "../../assets/filters/drought.png";
-import EarthquakeIcon from "../../assets/filters/earthquake.png";
-import FloodIcon from "../../assets/filters/flood.png";
-import PoliticalIcon from "../../assets/filters/political.png";
-import StrategicIcon from "../../assets/filters/strategic.png";
-import TechnologicalIcon from "../../assets/filters/technological.png";
-import CycloneIcon from "../../assets/filters/cyclone.png";
+// Array of filters
+const filters = [
+  { id: 1, label: "Natural", icon: <FaGlobe /> },
+  { id: 2, label: "Demonstrations", icon: <FaHandPeace /> },
+  { id: 3, label: "Drought", icon: <FaSun /> },
+  { id: 4, label: "Earthquake", icon: <FaMountain /> },
+  { id: 5, label: "Flood", icon: <FaWater /> },
+  { id: 6, label: "Political Violence", icon: <FaBolt /> },
+  { id: 7, label: "Strategic Developments", icon: <FaSatelliteDish /> },
+  { id: 8, label: "Technological", icon: <FaRobot /> },
+  { id: 9, label: "Tropical Cyclone THREE-24", icon: <FaWind /> },
+];
 
 const MichaelFooter = () => {
   return (
@@ -18,36 +20,30 @@ const MichaelFooter = () => {
       {/* Left Section */}
       <div className="flex items-center space-x-3">
         <button className="p-3 rounded-full bg-red-100 shadow-md">
-          <img src={NaturalIcon} alt="Map Type" className="w-7 h-7" />
+          <FaGlobe className="w-6 h-6 text-red-500" />
         </button>
         <div className="text-gray-700 text-sm font-medium">Map type</div>
       </div>
 
       {/* Filters Section */}
       <div className="flex items-center space-x-2 overflow-x-auto">
-        <FilterButton icon={NaturalIcon} label="Natural" />
-        <FilterButton icon={DemonstrationIcon} label="Demonstrations" />
-        <FilterButton icon={DroughtIcon} label="Drought" />
-        <FilterButton icon={EarthquakeIcon} label="Earthquake" />
-        <FilterButton icon={FloodIcon} label="Flood" />
-        <FilterButton icon={PoliticalIcon} label="Political violence" />
-        <FilterButton icon={StrategicIcon} label="Strategic developments" />
-        <FilterButton icon={TechnologicalIcon} label="Technological" />
-        <FilterButton icon={CycloneIcon} label="Tropical Cyclone THREE-24" />
+        {filters.map((filter) => (
+          <button
+            key={filter.id}
+            className="flex items-center space-x-2 px-4 py-1 bg-white rounded-full shadow-md border border-gray-200 hover:bg-gray-100 transition"
+          >
+            <span className="text-lg text-gray-700">{filter.icon}</span>
+            <span className="text-sm font-medium text-gray-700">{filter.label}</span>
+          </button>
+        ))}
       </div>
 
       {/* Right Section */}
-      <div>
+      <div className="flex items-center flex-col space-y-1">
         <button className="p-3 rounded-full bg-gray-100 shadow-md">
-          <img
-            src={TechnologicalIcon}
-            alt="Translate"
-            className="w-6 h-6 object-contain"
-          />
+          <FaRobot className="w-6 h-6 text-gray-700" />
         </button>
-        <div className="text-gray-700 text-sm font-medium text-center">
-          Translate
-        </div>
+        <div className="text-gray-700 text-sm font-medium">Translate</div>
       </div>
     </div>
   );
