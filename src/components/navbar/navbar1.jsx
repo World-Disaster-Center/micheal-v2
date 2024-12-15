@@ -36,7 +36,7 @@ function Navbar1() {
       <div className="hidden md:flex gap-12 items-center">
         <div className="flex gap-7 items-center">
           <a href="/home" className="text-white hover:text-michael_gray_2 text-[14px]">Home</a>
-          <a href="#" className="text-white hover:text-michael_gray_2 text-[14px]">Lorem</a>
+          <a href="/map" className="text-white hover:text-michael_gray_2 text-[14px]">Michael</a>
           <a href="#" className="text-white hover:text-michael_gray_2 text-[14px]">Lorem</a>
           <a href="#" className="text-white hover:text-michael_gray_2 text-[14px]">Lorem</a>
           <a href="#" className="text-white hover:text-michael_gray_2 text-[14px]">Lorem</a>

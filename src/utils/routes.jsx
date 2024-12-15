@@ -6,6 +6,7 @@ import StartingPage from '../pages/start';
 import WelcomePage from '../pages/welcome';
 import Language from '../pages/language';
 import Blog from '../pages/blog';
+import MichaelMap from '../pages/map';
 
 function MainRoutes() {
     return (
@@ -15,6 +16,8 @@ function MainRoutes() {
             <Route path="/language" element={<Language />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/map" element={<MichaelMap />} />
+
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
     )
