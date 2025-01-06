@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function NotFoundPage() {
     return (
@@ -8,4 +8,4 @@ function NotFoundPage() {
     )
 }
 
-export default NotFoundPage
+export default NotFoundPage;
