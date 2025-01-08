@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const EONET_API_URL = "https://eonet.gsfc.nasa.gov/api/v3/events";
-const EONET_CATEGORIES_API_URL = "https://eonet.gsfc.nasa.gov/api/v3/categories"
+const EONET_API_URL = process.env.REACT_APP_NASA_API_URL;
+const EONET_CATEGORIES_API_URL = process.env.REACT_APP_EONET_CATEGORIES_API_URL;
 
 export const fetchDisasters = createAsyncThunk(
   "disasters/fetchAll",
