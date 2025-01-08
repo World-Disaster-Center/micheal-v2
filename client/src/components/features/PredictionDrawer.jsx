@@ -96,7 +96,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
             ) : (
               <p className="text-gray-500 italic">No alerts found for the specified location.</p>
             )}
-            <div className="mt-4">
+            {/*<div className="mt-4">
               <a
                 href={data.url}
                 target="_blank"
@@ -105,7 +105,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
               >
                 View More Details
               </a>
-            </div>
+            </div>*/}
           </div>
         ) : (
           <div>

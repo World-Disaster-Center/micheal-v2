@@ -123,7 +123,7 @@ const Map = () => {
           mapContainerStyle={containerStyle}
           center={userLocation || center}
           zoom={3}
-          onClick={(e) => handleMapClick({ lat: e.latLng.lat(), lng: e.latLng.lng() })}
+          onClick={(e) => handleMapClick({ lat: e.latLng.lat(), long: e.latLng.lng() })}
           options={{
             mapTypeId: mapType,
             styles: mapStyles,
