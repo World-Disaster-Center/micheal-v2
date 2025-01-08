@@ -19,13 +19,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Provider store={store}>
-          <App/>
-          <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} />
-          <Toaster position="top-right" />
-        </Provider>
-      </BrowserRouter>
+          <Provider store={store}>
+              <App/>
+              <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+              <Toaster position="top-right" />
+          </Provider>
+        </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+    </QueryClientProvider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   </React.StrictMode>

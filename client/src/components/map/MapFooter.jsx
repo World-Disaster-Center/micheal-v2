@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
+=======
+import React, { useState, useRef }, { useEffect, useState } from 'react';
+>>>>>>> 154b571 (feat: add videos and chatbot integration)
 import { useDispatch } from 'react-redux';
 import { fetchDisastersByCategory } from '../../redux/services/disasters';
 import MapTypeModal from './MapTypeModal';
@@ -117,6 +121,41 @@ const MapFooter = ({ onMapTypeChange }) => {
             onMapTypeChange(mapType);
         }
     };
+
+  const [chatOpen, setChatOpen] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [openPanel, setOpenPanel] = useState(false);
+  const [riskNotification, setRiskNotification] = useState("");
+
+
+  const watchId = navigator.geolocation.watchPosition(async (position) => {
+    const { latitude, longitude } = position.coords;
+    setUserLocation({ lat: latitude, lng: longitude });
+    // TODO -> Fix this later ( i commented this just to reduce errors and warning in development)
+    // const response = await FetchRiskAdvice({ lat: latitude, lng: longitude });
+    // // console.log(response);
+    // if(response?.success){
+    //   setRiskNotification(response.advice);
+    // }else{
+    //   console.log('Error fetching risk advice:', response);
+    //   setError('Error fetching risk advice');
+    // }
+  });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
+    }
+  }, []);
+
+
+  const toggleChat = () => {
+    setChatOpen(!chatOpen);
+  };
+
+
 
     return (
         <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-screen-xl mx-auto px-4 flex items-center justify-center'>
