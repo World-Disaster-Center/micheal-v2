@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const apiUrl = "https://windy-1044744936985.us-central1.run.app";
+const apiUrl = process.env.REACT_APP_PREDICTION_API_URL;
 
 export const fetchPredictionApiData = createAsyncThunk(
   "api/fetchData",
