@@ -23,7 +23,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Prediction Alerts" width="w-2/6">
+    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Prediction Alerts" width="w-1/5">
       <div className="p-4 bg-gray-50 rounded-md shadow-md">
         <p className="text-red-700 font-semibold mb-2">
           Selected Location:{" "}
@@ -51,7 +51,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
             onClick={handleFetchData}
             className="w-1/3 bg-red-700 text-white font-medium rounded-md p-3 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50"
           >
-            Fetch Data
+            Search
           </button>
         )}
         </div>
