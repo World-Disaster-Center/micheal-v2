@@ -18,7 +18,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Search Drawer" width="w-2/6">
+    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Prediction Alerts" width="w-2/6">
       <div className="p-4 bg-gray-50 rounded-md shadow-md">
         <p className="text-red-700 font-semibold mb-2">
             Selected Location:{" "}
