@@ -6,7 +6,7 @@ import disasterSlice from '../slice/disasters';
 
 const store = configureStore({
   reducer: {
-    api: apiPredictionSlice,
+    prediction: apiPredictionSlice,
     theme: themeSlice,
     disasters: disasterSlice,
   },
