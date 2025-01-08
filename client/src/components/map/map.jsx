@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import locationPin from '../../assets/locationpin.png'
 import MapHeader from './MapHeader'
 import MapFooter from './MapFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDisasters, fetchDisastersByCategory } from '../../redux/services/disasters';
 import CustomMarker from './CustomMarker';
+import disasters from './data';
+import earthImage from '../../assets/earth2Image.jpeg'
+import itineraryIcon from '../../assets/itineraryIcon.png'
+import { setSelectedLocation } from "../../redux/slice/prediction/";
+import PredictionDrawer from '../features/PredictionDrawer';
 
 const containerStyle = {
     width: '100%',
@@ -55,10 +61,40 @@ const Map = () => {
     const [mapType, setMapType] = useState('roadmap');
   
     const { isLoaded, loadError } = useJsApiLoader({
-      id: 'google-map-script',
-      googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
+        id: 'google-map-script',
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
     });
-  
+
+    const [map, setMap] = useState(null);;
+    const [isPredDrawerOpen, setIsPredDrawerOpen] = useState(false);
+
+    const handleOpenPredDrawer = () => {
+        setIsPredDrawerOpen(true);
+      };
+      const handleClosePredDrawer = () => {
+        setIsPredDrawerOpen(false);
+      };
+    const handleMarkerClick = (markerId) => {
+        setActiveMarker(markerId); // Set the active marker
+    };
+
+    const handleMapClick = (location) => {
+        setActiveMarker(null)
+      dispatch(setSelectedLocation(location));
+      handleOpenPredDrawer();
+    }
+
+
+    const onLoad = useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds(center);
+        map.fitBounds(bounds);
+        setMap(map);
+    }, []);
+
+    const onUnmount = useCallback(function callback(map) {
+        setMap(null);
+    }, []);
+
     useEffect(() => {
       dispatch(fetchDisasters());
       // Get user location
@@ -73,13 +109,6 @@ const Map = () => {
       );
     }, [dispatch]);
   
-    const handleMarkerClick = (markerId) => {
-      setActiveMarker(markerId === activeMarker ? null : markerId);
-    };
-  
-    const handleMapClick = () => {
-      setActiveMarker(null);
-    };
   
     if (loadError) return <div>Error loading maps</div>;
     if (!isLoaded) return <div>Loading maps...</div>;
@@ -91,7 +120,7 @@ const Map = () => {
           mapContainerStyle={containerStyle}
           center={userLocation || center}
           zoom={3}
-          onClick={handleMapClick}
+          onClick={(e) => handleMapClick({ lat: e.latLng.lat(), lng: e.latLng.lng() })}
           options={{
             mapTypeId: mapType,
             styles: mapStyles,
@@ -125,6 +154,8 @@ const Map = () => {
           onCategorySelect={(categoryId) => dispatch(fetchDisastersByCategory(categoryId))}
           onMapTypeChange={setMapType}  
         />
+            <PredictionDrawer isOpen={isPredDrawerOpen} onClose={handleClosePredDrawer}  />
+
       </div>
     );
   };
