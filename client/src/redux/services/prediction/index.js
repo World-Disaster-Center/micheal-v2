@@ -7,14 +7,15 @@ const API_ALERT = process.env.REACT_APP_ALERT_API_KEY;
 
 export const fetchPredictionApiData = createAsyncThunk(
   "api/fetchData",
-  async ({ lat, long, searchType }, thunkAPI) => {
+  async ({ location, type }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
       const response = await toast.promise(
         axios.get(`${apiUrl}`, {
-          params: { lat, long, searchType },
+          params: { lat:location.lat, long:location.long, searchType:type },
         }),
+
         {
           pending: "Fetching data...",
           error: {
@@ -27,7 +28,8 @@ export const fetchPredictionApiData = createAsyncThunk(
 
       const data = response.data;
       toast.success("Data fetched successfully!");
-      return data;
+      console.log(data);
+      return data?.body;
     } catch (error) {
       toast.error(`Error: ${error.message}`);
       console.log(error);
