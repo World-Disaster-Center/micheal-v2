@@ -3,7 +3,7 @@ import React from 'react';
 const CustomDrawer = ({ isOpen, onClose, title, children, width = 'w-64' }) => {
   return (
     <div
-      className={`fixed top-0 z-50 right-0 h-screen ${width} bg-white shadow-lg transform ${
+      className={`fixed top-0 z-50 opacity-100 right-0 h-screen ${width} bg-white shadow-lg transform ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       } transition-transform duration-300`}
     >
