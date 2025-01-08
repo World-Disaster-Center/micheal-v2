@@ -9,16 +9,10 @@ import { PiLineVerticalLight } from "react-icons/pi";
 import { TbArrowForwardUp } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import michaelicon from '../../assets/michaelicon.png';
-import profile from '../../assets/profile.png';
-import { sendAlert } from '../../redux/services/prediction/alerts';
 import FilterModal from '../filterModal/FilterModal';
-import { TbArrowForwardUp } from "react-icons/tb";
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { sendAlert } from '../../redux/services/prediction/alerts';
 import michaelicon from '../../assets/michaelicon.png';
 import profile from '../../assets/profile.png';
-import { sendAlert } from '../../redux/services/prediction/alerts';
 
 const MapHeader = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -31,15 +25,7 @@ const MapHeader = () => {
         setIsOpen(false)
     }
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-    const [isOpen, setIsOpen] = useState(false)
-
-    const navigate = useNavigate();
-    const handleOpenDisasterEmailAlterModal = () => {
-        setIsOpen(true)
-    }
-    const handleCloseDisasterEmailAlterModal = () => {
-        setIsOpen(false)
-    }
+    
     return (
         <>
             <>
