@@ -11,6 +11,7 @@ import earthImage from '../../assets/earth2Image.jpeg'
 import itineraryIcon from '../../assets/itineraryIcon.png'
 import { setSelectedLocation } from "../../redux/slice/prediction/";
 import PredictionDrawer from '../features/PredictionDrawer';
+import AlertDrawer from '../features/AlertDrawer';
 
 const containerStyle = {
     width: '100%',
@@ -58,6 +59,7 @@ const Map = () => {
     const { disasters, filteredDisasters, loading } = useSelector((state) => state.disasters);
     const [activeMarker, setActiveMarker] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [isAlertDrawerOpen, setIsAlertDrawerOpen] = useState(false);
     const [mapType, setMapType] = useState('roadmap');
   
     const { isLoaded, loadError } = useJsApiLoader({
@@ -82,6 +84,7 @@ const Map = () => {
         setActiveMarker(null)
       dispatch(setSelectedLocation(location));
       handleOpenPredDrawer();
+      //setIsAlertDrawerOpen(true);
     }
 
 
@@ -155,6 +158,7 @@ const Map = () => {
           onMapTypeChange={setMapType}  
         />
             <PredictionDrawer isOpen={isPredDrawerOpen} onClose={handleClosePredDrawer}  />
+            <AlertDrawer isOpen={isAlertDrawerOpen} onClose={() => setIsAlertDrawerOpen(false)} />
 
       </div>
     );
