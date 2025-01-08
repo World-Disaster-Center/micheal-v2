@@ -16,7 +16,7 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
       <App/>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} />
       <Toaster position="top-right" />
       </Provider>
     </BrowserRouter>

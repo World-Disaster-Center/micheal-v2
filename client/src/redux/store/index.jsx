@@ -4,7 +4,7 @@ import themeSlice from '../slice/theme/index';
 
 const store = configureStore({
     reducer: {
-      api: apiPredictionSlice,
+      prediction: apiPredictionSlice,
       theme: themeSlice,
     },
   });

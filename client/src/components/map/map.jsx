@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
-import naturalDisasterIcon from '../../assets/naturalIcon.png'
 import locationPin from '../../assets/locationpin.png'
 import MapHeader from './MapHeader'
 import MapFooter from './MapFooter';
 import disasters from './data';
 import earthImage from '../../assets/earth2Image.jpeg'
 import itineraryIcon from '../../assets/itineraryIcon.png'
-import ApiComponent from '../features/ApiComponent';
+import { useDispatch } from "react-redux";
+import { setSelectedLocation } from "../../redux/slice/prediction/";
+import PredictionDrawer from '../features/PredictionDrawer';
 
 const containerStyle = {
     width: '100%',
@@ -37,13 +38,23 @@ const Map = () => {
     const [map, setMap] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const [activeMarker, setActiveMarker] = useState(null);
+    const [isPredDrawerOpen, setIsPredDrawerOpen] = useState(false);
+    const dispatch = useDispatch();
 
+    const handleOpenPredDrawer = () => {
+        setIsPredDrawerOpen(true);
+      };
+      const handleClosePredDrawer = () => {
+        setIsPredDrawerOpen(false);
+      };
     const handleMarkerClick = (markerId) => {
         setActiveMarker(markerId); // Set the active marker
     };
 
-    const handleMapClick = () => {
-        setActiveMarker(null) // Close the infoWindow
+    const handleMapClick = (location) => {
+        setActiveMarker(null)
+      dispatch(setSelectedLocation(location));
+      handleOpenPredDrawer();
     }
 
 
@@ -93,7 +104,7 @@ const Map = () => {
                 mapContainerStyle={containerStyle}
                 center={userLocation}
                 zoom={12}
-                onClick={handleMapClick}
+                onClick={(e) => handleMapClick({ lat: e.latLng.lat(), lng: e.latLng.lng() })}
                 options={{
                     styles: mapStyles,
                     mapTypeControl: false,
@@ -168,7 +179,7 @@ const Map = () => {
                     scaledSize: new window.google.maps.Size(50, 50)
                 }} />
             </GoogleMap>
-            <ApiComponent/>
+            <PredictionDrawer isOpen={isPredDrawerOpen} onClose={handleClosePredDrawer}  />
             <MapFooter />
         </div>
     ) : (
