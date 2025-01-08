@@ -388,14 +388,14 @@ const handleKeyDown = (e) => {
   return (
     <>
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm  transition-opacity duration-300"
+        className="fixed inset-0 z-[9990] bg-black bg-opacity-50 backdrop-blur-sm  transition-opacity duration-300"
         onClick={onClose}
       />
-      <form onSubmit={handleSubmit} className="fixed top-1/2 left-1/2 transform max-h-[80vh] -translate-x-1/2 -translate-y-1/2 w-[600px] backdrop-blur-sm max-w-[95vw] overflow-y-scroll bg-[#ecececf5] text-black p-8 rounded-lg shadow-xl transition-all duration-300 ease-in-out">
+      <form onSubmit={handleSubmit} className="fixed z-[99999] top-1/2 left-1/2 transform max-h-[80vh] -translate-x-1/2 -translate-y-1/2 w-[600px] backdrop-blur-sm max-w-[95vw] overflow-y-scroll bg-[#ecececf5] text-black p-8 rounded-lg shadow-xl transition-all duration-300 ease-in-out">
         <div className="flex items-center mb-6 justify-between">
 <div className="flex-1 pl-3">
 
-        <h2 className="text-2xl font-semibold text-center">CREATE A POST</h2>
+        <h2 className="text-2xl font-semibold text-center">PUBLISH A VIDEO</h2>
 </div>
         <div className="cursor-pointer " onClick={onClose}>
           <CgClose size={24}/>
