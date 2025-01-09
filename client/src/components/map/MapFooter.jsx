@@ -18,6 +18,65 @@ import ChatAIFloater from '../features/chatFloater';
 import wildFire from '../../assets/wildfire.png'
 
 
+const conflictData = [
+    {
+        id: 'armed-conflict',
+        name: 'Armed Conflicts',
+        description: 'Active armed conflicts and war zones',
+        incidents: [
+            {
+                id: 1,
+                title: 'Regional Conflict A',
+                location: { lat: 31.5204, lng: 34.4667 },
+                severity: 'high',
+                type: 'armed-conflict',
+                affectedArea: '150km radius',
+                date: '2024-01-15'
+            },
+            {
+                id: 2,
+                title: 'Civil Unrest B',
+                location: { lat: 33.8869, lng: 35.5131 },
+                severity: 'medium',
+                type: 'civil-unrest',
+                affectedArea: '50km radius',
+                date: '2024-01-20'
+            }
+        ]
+    },
+    {
+        id: 'civil-unrest',
+        name: 'Civil Unrest',
+        description: 'Areas experiencing civil protests and unrest',
+        incidents: [
+            {
+                id: 3,
+                title: 'Urban Protests',
+                location: { lat: 30.0444, lng: 31.2357 },
+                severity: 'medium',
+                type: 'civil-unrest',
+                affectedArea: '20km radius',
+                date: '2024-01-18'
+            }
+        ]
+    },
+    {
+        id: 'political-crisis',
+        name: 'Political Crisis',
+        description: 'Regions under political instability',
+        incidents: [
+            {
+                id: 4,
+                title: 'Government Instability',
+                location: { lat: 15.3694, lng: 44.1910 },
+                severity: 'high',
+                type: 'political-crisis',
+                affectedArea: '100km radius',
+                date: '2024-01-22'
+            }
+        ]
+    }
+];
 
 const buttonDisasters = [
     {
@@ -30,7 +89,6 @@ const buttonDisasters = [
         img: wildFire,
         id: "wildfires"
     },
-    
     {
         name: "Drought",
         img: droughtIcon,
@@ -47,8 +105,11 @@ const buttonDisasters = [
         id: "floods"
     },
     {
-        name: "Violences",
-        img: politicalIcon
+        name: "Conflicts",
+        img: politicalIcon,
+        id: "conflicts",
+        subCategories: conflictData,
+        incidents: conflictData.reduce((acc, category) => [...acc, ...category.incidents], [])
     },
     {
         name: "Development",
@@ -65,9 +126,12 @@ const buttonDisasters = [
         img: tropicalCyclone,
         id: "severeStorms"
     }
-]
+];
 
-const MapFooter = ({ onMapTypeChange }) => {
+
+
+
+const MapFooter = ({ onMapTypeChange, onCategorySelect }) => {
   const [chatOpen, setChatOpen] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [openPanel, setOpenPanel] = useState(false);
@@ -106,10 +170,15 @@ const MapFooter = ({ onMapTypeChange }) => {
     const mapTypeButtonRef = useRef(null);
 
     const handleCategoryClick = (categoryId) => {
-        if (categoryId) {
-            dispatch(fetchDisastersByCategory(categoryId));
+        if (categoryId === 'conflicts') {
+          const conflictButton = buttonDisasters.find(b => b.id === 'conflicts');
+          // Pass the incidents data up to the parent
+          onCategorySelect({ type: 'conflicts', data: conflictButton.incidents });
+        } else if (categoryId) {
+          onCategorySelect({ type: 'api', categoryId });
         }
-    };
+      };
+    
 
     const handleMapTypeSelect = (mapType) => {
         if (onMapTypeChange) {

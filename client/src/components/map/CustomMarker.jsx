@@ -43,6 +43,7 @@ const disasterConfig = {
     color: '#a17c4b',
     label: 'Cyclone'
   },
+
   default: {
     icon: IoIosWarning,
     color: '#76ff76',

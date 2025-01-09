@@ -1,29 +1,125 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectSearchType } from "../../redux/slice/prediction/";
 import CustomDrawer from "./CustomDrawer";
-import { fetchPredictionApiData } from "../../redux/services/prediction";
+
+// Mock data for different search types
+const MOCK_DATA = {
+  capAlerts: {
+    location: "Sample Location",
+    alerts: [
+      {
+        eventType: "Severe Thunderstorm",
+        severity: "Moderate",
+        timing: {
+          from: "2025-01-09T10:00:00",
+          to: "2025-01-09T18:00:00"
+        },
+        areas: ["District A", "District B"],
+        description: "Possibility of strong winds and heavy rainfall.",
+        metadata: {
+          lastUpdated: "2025-01-09T08:00:00",
+          sender: "National Weather Service"
+        }
+      }
+    ],
+    url: "https://example.com/weather-alerts"
+  },
+  drought40: {
+    location: "Sample Location",
+    alerts: [
+      {
+        eventType: "Drought Warning",
+        severity: "High",
+        timing: {
+          from: "2025-01-01",
+          to: "2025-01-40"
+        },
+        areas: ["Region X", "Region Y"],
+        description: "40-day drought prediction indicates severe water scarcity.",
+        metadata: {
+          lastUpdated: "2025-01-09T00:00:00",
+          sender: "Drought Monitoring Center"
+        }
+      }
+    ],
+    url: "https://example.com/drought-40"
+  },
+  drought100: {
+    location: "Sample Location",
+    alerts: [
+      {
+        eventType: "Extended Drought Alert",
+        severity: "Critical",
+        timing: {
+          from: "2025-01-01",
+          to: "2025-04-10"
+        },
+        areas: ["Zone 1", "Zone 2", "Zone 3"],
+        description: "100-day forecast shows prolonged drought conditions expected.",
+        metadata: {
+          lastUpdated: "2025-01-09T00:00:00",
+          sender: "Climate Prediction Center"
+        }
+      }
+    ],
+    url: "https://example.com/drought-100"
+  },
+  fwi: {
+    location: "Sample Location",
+    alerts: [
+      {
+        eventType: "Fire Weather Warning",
+        severity: "Extreme",
+        timing: {
+          from: "2025-01-09",
+          to: "2025-01-12"
+        },
+        areas: ["Forest Area A", "Forest Area B"],
+        description: "High fire spread potential due to strong winds and low humidity.",
+        metadata: {
+          lastUpdated: "2025-01-09T06:00:00",
+          sender: "Fire Weather Intelligence Unit"
+        }
+      }
+    ],
+    url: "https://example.com/fire-spread"
+  },
+  dfm10h: {
+    location: "Sample Location",
+    alerts: [
+      {
+        eventType: "Fuel Moisture Alert",
+        severity: "Moderate",
+        timing: {
+          from: "2025-01-09",
+          to: "2025-01-10"
+        },
+        areas: ["Sector 1", "Sector 2"],
+        description: "10-hour fuel moisture content below critical threshold.",
+        metadata: {
+          lastUpdated: "2025-01-09T07:00:00",
+          sender: "Fuel Moisture Monitoring System"
+        }
+      }
+    ],
+    url: "https://example.com/fuel-moisture"
+  }
+};
 
 const PredictionDrawer = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const { selectedLocation, selectSearchType, data, error } = useSelector((state) => state.prediction);
-
-  const [isSearchTypeSelected, setIsSearchTypeSelected] = useState(false);
+  const { selectedLocation, selectSearchType } = useSelector((state) => state.prediction);
 
   const handleSearchTypeChange = (event) => {
     const selectedType = event.target.value;
     dispatch(setSelectSearchType(selectedType));
-    setIsSearchTypeSelected(true);
   };
 
-  const handleFetchData = () => {
-    if (selectedLocation && selectSearchType) {
-      dispatch(fetchPredictionApiData({ location: selectedLocation, type: selectSearchType }));
-    }
-  };
+  // Get mock data based on selected search type
+  const mockData = selectSearchType ? MOCK_DATA[selectSearchType] : null;
 
   return (
-    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Prediction Alerts" width="w-1/5">
+    <CustomDrawer isOpen={isOpen} onClose={onClose} title="Prediction Alerts" width="w-2/6">
       <div className="p-4 bg-gray-50 rounded-md shadow-md">
         <p className="text-red-700 font-semibold mb-2">
           Selected Location:{" "}
@@ -31,7 +127,7 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
             {selectedLocation ? JSON.stringify(selectedLocation) : "None"}
           </span>
         </p>
-        <div className="relative flex gap-2">
+        <div className="relative">
           <select
             value={selectSearchType || ""}
             onChange={handleSearchTypeChange}
@@ -46,78 +142,67 @@ const PredictionDrawer = ({ isOpen, onClose }) => {
             <option value="fwi">Fire Spread</option>
             <option value="dfm10h">Fuel Moisture</option>
           </select>
-        {isSearchTypeSelected && (
-          <button
-            onClick={handleFetchData}
-            className="w-1/3 bg-red-700 text-white font-medium rounded-md p-3 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50"
-          >
-            Search
-          </button>
-        )}
         </div>
       </div>
 
-     <div className="p-6 bg-gray-50 rounded-lg shadow-lg mt-4">
-  {data ? (
-    <div>
-      <h2 className="text-lg font-bold text-red-700 mb-4">
-        Data Found for Location: <span className="text-gray-800">{data.location}</span>
-      </h2>
-      {selectedCategory === "Fire Danger" ? (
-        <div className="p-4 border border-yellow-700 bg-yellow-50 rounded-md shadow-sm">
-          <h3 className="text-yellow-700 font-semibold">Fire Danger</h3>
-          <p className="text-gray-700">
-            <span className="font-bold">Severity:</span> Very Low
-          </p>
-        </div>
-      ) : selectedCategory === "Drought" ? (
-        <div className="p-4 border border-blue-700 bg-blue-50 rounded-md shadow-sm">
-          <h3 className="text-blue-700 font-semibold">Drought</h3>
-          <p className="text-gray-700">
-            <span className="font-bold">Severity:</span> No Risk
-          </p>
-        </div>
-      ) : selectedCategory === "Weather Alert" ? (
-        <div className="p-4 border border-red-700 bg-red-50 rounded-md shadow-sm">
-          <h3 className="text-red-700 font-semibold">Winter Weather Advisory</h3>
-          <p className="text-gray-700">
-            <span className="font-bold">Severity:</span> Moderate
-          </p>
-          <p className="text-gray-700">
-            <span className="font-bold">Timing:</span> Thursday 09, 3:00 AM - Friday 10, 6:00 AM
-          </p>
-          <p className="text-gray-700">
-            <span className="font-bold">Areas Affected:</span> Fisher, Nolan, Sterling, Coke,
-            Runnels, Irion, Tom Green, Concho, Crockett, Schleicher, Sutton, Haskell, Throckmorton,
-            Jones, Shackelford, Taylor, Callahan, Coleman, Brown, McCulloch, San Saba, Menard,
-            Kimble, Mason
-          </p>
-          <p className="text-gray-700 mt-2">
-            <span className="font-bold">Description:</span> A wintry mix of rain, freezing rain,
-            sleet, and snow is possible starting late tonight. Although it may switch over to rain
-            during the day on Thursday as temperatures rise above freezing, a wintry mix may return
-            Thursday night. In general, any accumulations will remain light with most areas seeing
-            patchy ice on roadways and a dusting of snow.
-          </p>
-          <p className="text-gray-500 mt-2 text-sm">
-            <span className="font-bold">Last Updated:</span> 5h 35m ago |{" "}
-            <span className="font-bold">Sender:</span> NWS San Angelo TX
-          </p>
-        </div>
-      ) : (
-        <p className="text-gray-500 italic">No alerts found for the specified location.</p>
-      )}
-    </div>
-  ) : (
-    <div>
-      {error ? (
-        <div className="text-red-500 font-semibold">Error: {error}</div>
-      ) : (
-        <p className="text-gray-500 italic">No data available.</p>
-      )}
-    </div>
-  )}
-</div>
+      <div className="p-6 bg-gray-50 rounded-lg shadow-lg mt-4">
+        {mockData ? (
+          <div>
+            <h2 className="text-lg font-bold text-red-700 mb-4">
+              Data Found for Location: <span className="text-gray-800">{mockData.location}</span>
+            </h2>
+            {mockData.alerts && mockData.alerts.length > 0 ? (
+              <div className="space-y-4">
+                {mockData.alerts.map((alert, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border border-red-700 bg-red-50 rounded-md shadow-sm"
+                  >
+                    <h3 className="text-red-700 font-semibold">
+                      Alert: {alert.eventType}
+                    </h3>
+                    <p className="text-gray-700">
+                      <span className="font-bold">Severity:</span> {alert.severity}
+                    </p>
+                    <p className="text-gray-700">
+                      <span className="font-bold">Timing:</span> {alert.timing.from} -{" "}
+                      {alert.timing.to}
+                    </p>
+                    <p className="text-gray-700">
+                      <span className="font-bold">Areas Affected:</span>{" "}
+                      {alert.areas.join(", ")}
+                    </p>
+                    <p className="text-gray-700 mt-2">
+                      <span className="font-bold">Description:</span> {alert.description}
+                    </p>
+                    <p className="text-gray-500 mt-2 text-sm">
+                      <span className="font-bold">Last Updated:</span>{" "}
+                      {alert.metadata.lastUpdated} | <span className="font-bold">Sender:</span>{" "}
+                      {alert.metadata.sender}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 italic">
+                No alerts found for the specified location.
+              </p>
+            )}
+            <div className="mt-4">
+              <a
+                href={mockData.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-700 underline hover:text-red-500"
+              >
+                View More Details
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p className="text-gray-500 italic">Please select a search type to view data.</p>
+          </div>
         )}
       </div>
     </CustomDrawer>
