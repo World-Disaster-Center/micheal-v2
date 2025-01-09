@@ -12,6 +12,7 @@ import itineraryIcon from '../../assets/itineraryIcon.png'
 import { setSelectedLocation } from "../../redux/slice/prediction/";
 import PredictionDrawer from '../features/PredictionDrawer';
 import AlertDrawer from '../features/AlertDrawer';
+import politicalIcon from '../../assets/politic1.png'
 
 const containerStyle = {
     width: '100%',
@@ -61,6 +62,9 @@ const Map = () => {
     const [userLocation, setUserLocation] = useState(null);
     const [isAlertDrawerOpen, setIsAlertDrawerOpen] = useState(false);
     const [mapType, setMapType] = useState('roadmap');
+    const [conflictMarkers, setConflictMarkers] = useState([]);
+    const [showingConflicts, setShowingConflicts] = useState(false);
+  
   
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
@@ -115,6 +119,46 @@ const Map = () => {
   
     if (loadError) return <div>Error loading maps</div>;
     if (!isLoaded) return <div>Loading maps...</div>;
+
+    const handleCategorySelect = async (selection) => {
+        if (selection.type === 'conflicts') {
+          setConflictMarkers(selection.data);
+          setShowingConflicts(true);
+        } else {
+          setConflictMarkers([]);
+          setShowingConflicts(false);
+          dispatch(fetchDisastersByCategory(selection.categoryId));
+        }
+      };
+
+      const ConflictMarker = ({ incident, isActive, onClick }) => {
+        return (
+          <>
+            <Marker
+              position={incident.location}
+              onClick={onClick}
+              icon={{
+                url: politicalIcon,
+                scaledSize: new window.google.maps.Size(30, 30)
+              }}
+            />
+            {isActive && (
+              <InfoWindow
+                position={incident.location}
+                onCloseClick={() => setActiveMarker(null)}
+              >
+                <div className="p-2">
+                  <h3 className="font-bold">{incident.title}</h3>
+                  <p className="text-sm">Type: {incident.type}</p>
+                  <p className="text-sm">Severity: {incident.severity}</p>
+                  <p className="text-sm">Affected Area: {incident.affectedArea}</p>
+                  <p className="text-sm">Date: {incident.date}</p>
+                </div>
+              </InfoWindow>
+            )}
+          </>
+        );
+      };
   
     return (
       <div className='relative'>
@@ -144,18 +188,30 @@ const Map = () => {
             maxZoom: 20,
           }}
         >
-          {filteredDisasters.map((disaster) => (
+         {showingConflicts ? (
+          conflictMarkers.map((incident) => (
+            <ConflictMarker
+              key={incident.id}
+              incident={incident}
+              isActive={activeMarker === incident.id}
+              onClick={() => handleMarkerClick(incident.id)}
+            />
+          ))
+        ) : (
+          filteredDisasters.map((disaster) => (
             <CustomMarker
               key={disaster.id}
               disaster={disaster}
               isActive={activeMarker === disaster.id}
               onClick={() => handleMarkerClick(disaster.id)}
             />
-          ))}
+          ))
+        )}
+
         </GoogleMap>
         <MapFooter 
-          onCategorySelect={(categoryId) => dispatch(fetchDisastersByCategory(categoryId))}
-          onMapTypeChange={setMapType}  
+            onCategorySelect={handleCategorySelect}
+            onMapTypeChange={setMapType}    
         />
             <PredictionDrawer isOpen={isPredDrawerOpen} onClose={handleClosePredDrawer}  />
             <AlertDrawer isOpen={isAlertDrawerOpen} onClose={() => setIsAlertDrawerOpen(false)} />
