@@ -13,7 +13,6 @@ function WelcomePage() {
       <div  className="relative bg-cover bg-center h-[80vh]"
      style={{ backgroundImage: `url(${bgImage})` }}>
       <div className='absolute inset-0 bg-michael_dark_red_50'>
-
         <div className='flex gap-2 items-center pl-7 lg:pl-28 pt-4'>
           <img src={michaelLogo} alt="Logo" className='w-10 lg:w-28' />
         </div>

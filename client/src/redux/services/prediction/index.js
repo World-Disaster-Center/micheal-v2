@@ -15,7 +15,6 @@ export const fetchPredictionApiData = createAsyncThunk(
         axios.get(`${apiUrl}`, {
           params: { lat:location.lat, long:location.long, searchType:type },
         }),
-
         {
           pending: "Fetching data...",
           error: {
